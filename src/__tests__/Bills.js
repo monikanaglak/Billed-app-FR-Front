@@ -15,7 +15,7 @@ import { localStorageMock } from "../__mocks__/localStorage.js";
 jest.mock("../app/store", () => mockStore);
 
 describe(" Given I am connected as an employee ", () => {
-  //objet define property allowd to add or to modified property in object and give back new object
+  //objet define property allowd to add or to modified property in object 
   Object.defineProperty(window, "localStorage", {
     value: localStorageMock,
   });
@@ -75,14 +75,15 @@ describe(" Given I am connected as an employee ", () => {
         //getting the button to triger the function
         const buttonNewBill = screen.getByTestId("btn-new-bill");
         buttonNewBill.addEventListener("click", handleClickNewBill);
-        //we simulate the click
+        //simulate the click
         userEvent.click(buttonNewBill);
-        //expection to function het called
+        //expection to function get called
         expect(handleClickNewBill).toHaveBeenCalled();
         expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy();
         expect(screen.getByTestId("form-new-bill")).toBeTruthy();
       });
     });
+    /**************test simulation openning after eye click justification paper*****************/
     describe("When i click on the eye icon", () => {
       test("Then the modal with justificatif of the bill should get opened ", () => {
         const onNavigate = (pathname) => {
@@ -96,7 +97,7 @@ describe(" Given I am connected as an employee ", () => {
           localStorage: window.localStorage,
         });
         $.fn.modal = jest.fn();
-        //getting just first eye for test
+        //getting just first eye for the test
         const eyes_icons = screen.getAllByTestId("icon-eye")[0];
         //getting opening click eye icon
         const handleClickIcon_eye = jest.fn(() =>
@@ -111,7 +112,7 @@ describe(" Given I am connected as an employee ", () => {
       });
     });
   });
-
+  /***********************test for errors********************/
   describe("When an error occurs on API", () => {
     beforeEach(() => {
       jest.spyOn(mockStore, "bills");
@@ -130,6 +131,7 @@ describe(" Given I am connected as an employee ", () => {
       document.body.appendChild(root);
       router();
     });
+    /***************test error 404 page not found****************************/
     test("fetches bills from an API and fails with 404 message error", async () => {
       mockStore.bills.mockImplementationOnce(() => {
         return {
@@ -140,12 +142,11 @@ describe(" Given I am connected as an employee ", () => {
       });
       const html = BillsUI({ error: "Erreur 404" });
       document.body.innerHTML = html;
-      /*window.onNavigate(ROUTES_PATH.Dashboard)
-      await new Promise(process.nextTick);*/
+      
       const message = await screen.getByText(/Erreur 404/);
       expect(message).toBeTruthy();
     });
-
+    /***********************test 500 error from server, from backend***********************************/
     test("fetches messages from an API and fails with 500 message error", async () => {
       mockStore.bills.mockImplementationOnce(() => {
         return {
@@ -155,8 +156,7 @@ describe(" Given I am connected as an employee ", () => {
         };
       });
 
-      /*window.onNavigate(ROUTES_PATH.Dashboard)
-      await new Promise(process.nextTick);*/
+      
       const html = BillsUI({ error: "Erreur 500" });
       document.body.innerHTML = html;
       const message = await screen.getByText(/Erreur 500/);
