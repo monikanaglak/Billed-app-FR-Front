@@ -1,7 +1,6 @@
 import { ROUTES_PATH } from "../constants/routes.js";
 import { formatDate, formatStatus } from "../app/format.js";
 import Logout from "./Logout.js";
-//constructor for bills
 export default class {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document;
@@ -11,7 +10,7 @@ export default class {
       `button[data-testid="btn-new-bill"]`
     );
 
-    //on navigate to mu mowi gdzie ma navigowac gdzie ma isc,
+    
     if (buttonNewBill)
       buttonNewBill.addEventListener("click", this.handleClickNewBill);
     const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`);
