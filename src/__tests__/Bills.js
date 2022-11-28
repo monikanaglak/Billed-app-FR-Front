@@ -39,7 +39,7 @@ describe(" Given I am connected as an employee ", () => {
       //getting icons
       await waitFor(() => screen.getByTestId("icon-window"));
       const windowIcon = screen.getByTestId("icon-window");
-      // checking if the icon have a classe active -icon, its her that makes thing highlight
+      // checking if the icon have a classe active -icon, its her that makes things highlight
       /************    adding expect  ************************************/
       expect(windowIcon).toHaveClass("active-icon");
     });
@@ -104,8 +104,9 @@ describe(" Given I am connected as an employee ", () => {
           bill.handleClickIconEye(eyes_icons)
         );
 
-        //simulation click
+        
         eyes_icons.addEventListener("click", handleClickIcon_eye);
+        //userEvent is a simulation of interaction ( of click)
         userEvent.click(eyes_icons);
         expect(handleClickIcon_eye).toHaveBeenCalled();
         expect(screen.getAllByText("Justificatif")).toBeTruthy();
