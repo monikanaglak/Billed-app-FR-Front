@@ -40,10 +40,10 @@ describe("Given I am connected as an employee", () => {
       //i expect that its shown, that it has text
       expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy();
     });
-    /***** test when im on the page form is shown, and no message error is display ******/
+    /***** test the form for newbill is display, and no message error is shown******/
     test("Then the empty form is shown, and no message error is display", () => {
+      //navigation to newbill page
       window.onNavigate(ROUTES_PATH.NewBill);
-      //creating newbill
       const newBill = new NewBill({
         document,
         onNavigate,
@@ -54,7 +54,7 @@ describe("Given I am connected as an employee", () => {
       expect(errorMessageForm).toBeTruthy();
       expect(errorMessageForm).toHaveClass("hiddenError");
     });
-    /***** test sending empty form, message it should be display *****/
+    /***** test sending empty newbill form, then the message should message  should be display *****/
     test("Then when i try to send form not complet, the message error will be display", () => {
       window.onNavigate(ROUTES_PATH.NewBill);
 
@@ -77,8 +77,9 @@ describe("Given I am connected as an employee", () => {
       const handleSubmit = jest.fn((e) => newBill.handleSubmit(e));
       //getting erreur message
       const errorMessageForm = screen.getByTestId("error-message-form");
-      //simulate sending form
+      //eventlistener
       form.addEventListener("submit", handleSubmit);
+      //simulating submit
       fireEvent.submit(form);
       expect(handleSubmit).toHaveBeenCalled();
       expect(form).toBeTruthy();
@@ -86,6 +87,7 @@ describe("Given I am connected as an employee", () => {
       //i expect that the message error will be display
       expect(errorMessageForm).toHaveClass("showError");
     });
+    /*************test bad extension*********************/
     test("Then  i upload the files with bad extension", () => {
       window.onNavigate(ROUTES_PATH.NewBill);
 
@@ -118,6 +120,7 @@ describe("Given I am connected as an employee", () => {
       expect(errorMessage).toBeTruthy();
       expect(errorMessage).toHaveClass("showError");
     });
+    /****************test with good extension***********************/
     test("Then i upload the files with  good extention", () => {
       window.onNavigate(ROUTES_PATH.NewBill);
       document.body.innerHTML = NewBillUI();
@@ -182,8 +185,6 @@ describe("Given that I am connected as an employee", () => {
         };
         //getting the submit function
         const handleSubmit = jest.fn((e) => newBill.handleSubmit(e));
-
-        //makiing new bill
       
         newBill.createBill = (newBill) => newBill;
         document.querySelector(`select[data-testid="expense-type"]`).value =
@@ -202,7 +203,6 @@ describe("Given that I am connected as an employee", () => {
           billCheck.commentary;
         newBill.fileUrl = billCheck.fileUrl;
         newBill.fileName = billCheck.fileName;
-
         submit.addEventListener("click", handleSubmit);
         fireEvent.click(submit);
         expect(handleSubmit).toHaveBeenCalled();
@@ -224,6 +224,7 @@ describe("Given that I am connected as an employee", () => {
           document.body.appendChild(root)
           router()
         })
+        /***************test error 404***************************/
         test("fetches bills from an API and fails with 404 message error", async () => {
     
           mockStore.bills.mockImplementationOnce(() => {
@@ -239,7 +240,7 @@ describe("Given that I am connected as an employee", () => {
           const message = await screen.getByText(/Erreur 404/)
           expect(message).toBeTruthy()
         })
-    
+        /**********************test error 500**********************/
         test("fetches messages from an API and fails with 500 message error", async () => {
     
           mockStore.bills.mockImplementationOnce(() => {
@@ -248,11 +249,8 @@ describe("Given that I am connected as an employee", () => {
                 return Promise.reject(new Error("Erreur 500"))
               }
             }})
-    
-          /*window.onNavigate(ROUTES_PATH.Dashboard)
-          await new Promise(process.nextTick);*/
           const html = BillsUI({error:"Erreur 500"})
-            document.body.innerHTML = html;
+          document.body.innerHTML = html;
           const message = await screen.getByText(/Erreur 500/)
           expect(message).toBeTruthy()
         })
