@@ -13,7 +13,7 @@ export const filteredBills = (data, status) => {
       if (typeof jest !== 'undefined') {
         selectCondition = (bill.status === status)
       }
-      /* istanbul ignore next */
+      /* istanbul ignore next, it meens that jest will not couverage this function */
       else {
         // in prod environment
         const userEmail = JSON.parse(localStorage.getItem("user")).email
@@ -83,7 +83,7 @@ export default class {
     $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
     if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
   }
- 
+  //fixing bug, no if statements, no condition if bill is click, the function gonne fire
   handleEditTicket(e, bill, bills) {
 
     /*if (this.counter === undefined || this.id !== bill.id)
