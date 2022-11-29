@@ -49,6 +49,7 @@ export default class NewBill {
   handleChangeFile = (e) => {
     e.preventDefault();
     const extendAccepted = new RegExp("\\.(jpg|jpeg|png)$");
+    //methode test form regex check if regex has a match with a string that i put for the value
     if (
       extendAccepted.test(
         this.document.querySelector(`input[data-testid="file"]`).files[0].name
