@@ -1,6 +1,5 @@
 
-//funkcje ktore zapisuja w obiekcie store,  localstorage informacje
-//kto jest polaczony, uzytkownik czy administrator
+
 export const localStorageMock = (function() {
   let store = {};
   return {
