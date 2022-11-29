@@ -1,6 +1,6 @@
-//obiekt ktory ma 3 metody, metoda list zwraca promise ( jakies rachunki ale gdzie one sa potem wykorzystane?)
+
 const mockedBills = {
-  //obiket Promise, value ktory moze byc dostepny (resolve)lub nie
+  
   //(reject) 
   list() {
     return Promise.resolve([{
